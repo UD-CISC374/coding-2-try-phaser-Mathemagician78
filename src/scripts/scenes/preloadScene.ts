@@ -8,6 +8,17 @@ export default class PreloadScene extends Phaser.Scene {
 
     this.load.bitmapFont("letters", "assets/font.png", "assets/font.xml");
 
+    this.load.spritesheet("skull", "assets/Skull.png",{
+      frameWidth: 200,
+      frameHeight: 300
+    });
+
+    this.load.audio("music", "assets/music.mp3");
+    this.load.audio("winner", "assets/win.wav");
+    this.load.audio("bell", "assets/pleasing-bell.wav");
+    this.load.audio("warp", "assets/wave.wav");
+    this.load.audio("pop", "assets/pop.ogg");
+
     this.load.spritesheet("egg", "assets/screenshot_1.png",{
       frameWidth: 200,
       frameHeight: 220

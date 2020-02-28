@@ -1,6 +1,7 @@
 import ExampleObject from '../objects/exampleObject';
 import Egg from '../objects/Egg';
 import SideEgg from '../objects/SideEgg';
+import hurt from '../objects/hurt';
 
 export default class MainScene extends Phaser.Scene {
   private exampleObject: ExampleObject;
@@ -19,6 +20,11 @@ export default class MainScene extends Phaser.Scene {
   private score;
   private winner: boolean;
   private winlabel;
+  private bgmusic;
+  private carrotmusic;
+  private warpSound;
+  private popSound;
+  private winSound;
   
 
   constructor() {
@@ -28,6 +34,25 @@ export default class MainScene extends Phaser.Scene {
   create() {
     let bg = this.add.image(0, 0, "background");
     bg.setOrigin(0, 0);
+
+    this.bgmusic = this.sound.add("music");
+    this.warpSound = this.sound.add("warp");
+    this.popSound = this.sound.add("pop");
+    this.winSound = this.sound.add("winner");
+    
+
+    var musicConfig = {
+      mute: false,
+      volume: 1,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: true,
+      delay:0
+    };
+
+    this.bgmusic.play(musicConfig);
+    this.carrotmusic = this.sound.add("bell");
 
     this.scoreLabel = this.add.bitmapText(10, 5, "letters", "SCORE ", 16);
 
@@ -89,6 +114,15 @@ export default class MainScene extends Phaser.Scene {
         hideOnComplete: false
     
         });
+
+        this.anims.create({
+          key: "Perish",
+          frames: this.anims.generateFrameNumbers("skull", { start: 0, end: 5 }),
+          frameRate: 10,
+          repeat: 0,
+          hideOnComplete: true
+      
+          });
 
         this.anims.create({
           key: "POOFERWIN",
@@ -175,6 +209,7 @@ export default class MainScene extends Phaser.Scene {
     
     theEgg.setTexture("Poof", 5);
     theEgg.play("POOFER", true);
+    this.winSound.play();
 
     this.enemy.setVelocity(0, 0);
     this.winner = true;
@@ -186,9 +221,44 @@ export default class MainScene extends Phaser.Scene {
 
   }
 
+
+  Puff(){
+    var OUCH = new hurt(this, this.bunny.x, this.bunny.y);
+  }
+
   takeDamage(bunny, wolf){
+
+    if(this.bunny.alpha < 1){
+      return;
+    }
+
     this.score -= 50;
     this.scoreLabel.text = "SCORE " + this.score;
+    this.warpSound.play();
+    var OUCH = new hurt(this, this.bunny.x, this.bunny.y);
+    bunny.disableBody(true, true);
+
+    this.time.addEvent({
+      delay: 1000,
+      callback: this.resetBun,
+      callbackScope: this,
+      loop: false
+    });
+      
+    this.time.addEvent({
+      delay: 1000,
+      callback: this.Puff,
+      callbackScope: this,
+      loop: false
+    });
+
+    this.time.addEvent({
+      delay: 3000,
+      callback: this.bunSee,
+      callbackScope: this,
+      loop: false
+    });
+
   }
 
 
@@ -197,7 +267,7 @@ export default class MainScene extends Phaser.Scene {
 
     carrot.setTexture("Poof", 5);
     carrot.play("POOFER", true);
-    
+    this.carrotmusic.play();
     
     this.score += 5;
     this.scoreLabel.text = "SCORE " + this.score;
@@ -268,6 +338,7 @@ export default class MainScene extends Phaser.Scene {
 
   shootEgg(){
     var egg1 = new Egg(this);
+    this.popSound.play();
     egg1.setScale(0.1);
     this.score -= 50;
     this.scoreLabel.text = "SCORE " + this.score;
@@ -276,10 +347,23 @@ export default class MainScene extends Phaser.Scene {
 
   shootSideEgg(){
     var egg1 = new SideEgg(this);
+    this.popSound.play();
     egg1.setScale(0.1);
     this.score -= 50;
     this.scoreLabel.text = "SCORE " + this.score;
     
+  }
+
+  bunSee(){
+    this.bunny.alpha = 1
+    return 5;
+  }
+
+
+
+  resetBun(){
+    this.bunny.enableBody(true, 400, 350, true, true);
+    this.bunny.alpha = 0.5;
   }
   
 
@@ -306,11 +390,11 @@ export default class MainScene extends Phaser.Scene {
 
 
 
-    if(Phaser.Input.Keyboard.JustDown(this.cursorKeys.space) && this.score>500){
+    if(Phaser.Input.Keyboard.JustDown(this.cursorKeys.space) && this.score>500 && this.bunny.active){
       this.shootEgg();
     }
 
-    if(Phaser.Input.Keyboard.JustDown(this.cursorKeys.shift) && this.score>500){
+    if(Phaser.Input.Keyboard.JustDown(this.cursorKeys.shift) && this.score>500 && this.bunny.active){
       this.shootSideEgg();
     }
 

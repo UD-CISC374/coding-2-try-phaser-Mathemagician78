@@ -13,3 +13,15 @@
 *https://opengameart.org/content/fox-wolf-pack-rework*
 
 *https://opengameart.org/content/easter-egg*
+
+*https://opengameart.org/content/win-music-1*
+
+*https://opengameart.org/content/skull-death-effect-spritesheet*
+
+*https://opengameart.org/content/pleasing-bell-sound-effect*
+
+*https://opengameart.org/content/warp-sound-1*
+
+*https://opengameart.org/content/fantasy-logo-music-short-var-epic-orchestra-music*
+
+*https://opengameart.org/content/bubbles-pop*

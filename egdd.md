@@ -4,7 +4,7 @@ waltz:
 meta:
   version: 0.0.2
   gdd authors:
-    - Your name goes here
+    - Sam Rosenthal
   template authors:
     - Austin Cory Bart <acbart@udel.edu>
     - Mark Sheriff
@@ -14,34 +14,38 @@ meta:
 
 # Overview
 
-*Notes written in italics must be deleted in the final version.*
+*A game about a rabbit*
 
 ## Elevator Pitch
 
-*A one sentence pitch for your game. Pretend that your were pitching your game to a executive going to the elevator. You have less than 60 Seconds. Check [this resource](http://www.gameacademy.com/perfecting-indie-games-elevator-pitch/) for more information.*
+*Players control a small rabbit in a field as it gathers carrots and evades a wandering fox.  *
 
 ## Influences (Brief)
 
-- *Influence #1*:
-  - Medium: *(Television, Games, Literature, Movies, etc.)*
-  - Explanation: *In one paragraph or less, explain why this is an influence.*
-- *Influence #2*:
-  - Medium: *(Television, Games, Literature, Movies, etc.)*
-  - Explanation: *In one paragraph or less, explain why this is an influence.*
-- *Influence #3*:
-  - Medium: *(Television, Games, Literature, Movies, etc.)*
-  - Explanation: *In one paragraph or less, explain why this is an influence.*
+- *Backyard Rabbit*:
+  - Medium: *Real Life*
+  - Explanation: *The game's rabbit is based on the generations of rabbits who have been living under the shed and in the garden in my family's backyard.  I like watching them, so I added one of them to the game.*
+
+- *Easter Bunny*:
+  - Medium: *Assorted*
+  - Explanation: *I like the idea of a bunny that gives out eggs full of candy.  After I added the bunny, I figured it would be cool if he fired eggs at the fox once he had enough carrots. *
+
+- *Getting Started with Phaser Videos*:
+  - Medium: *Youtube Video*
+  - Explanation: *The game is based on the game developed in the video.  The bouncing fox is based on the bouncing powerups, the poofing animation is based on the explosions, and the carrots are based on the enemy ships.  *
 
 ## Core Gameplay Mechanics (Brief)
 
 *Give a very high-level description of any core gameplay mechanics*
 
-- *Gameplay Mechanic #1*
-- *Gameplay Mechanic #2*
-- *Gameplay Mechanic #3*
-- *Gameplay Mechanic #4*
+- *Control Rabbit with arrow keys*
+- *Eat carrot upon rabbit-carrot collision*
+- *Fire egg with space or shift*
+- *Take damage upon rabbit-fox collision*
 
 # Learning Aspects
+
+*Hand-eye coordination is used to control the rabbit*
 
 ## Learning Domains
 
@@ -49,7 +53,7 @@ meta:
 
 ## Target Audiences
 
-*Who are your learners?*
+*Kids who like rabbits*
 
 ## Target Contexts
 
