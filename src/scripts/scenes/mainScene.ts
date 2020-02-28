@@ -4,7 +4,7 @@ import SideEgg from '../objects/SideEgg';
 
 export default class MainScene extends Phaser.Scene {
   private exampleObject: ExampleObject;
-  private food;
+  private food; 
   private food2;
   private food3;
   
