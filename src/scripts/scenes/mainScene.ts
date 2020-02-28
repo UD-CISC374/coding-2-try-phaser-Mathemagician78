@@ -1,5 +1,6 @@
 import ExampleObject from '../objects/exampleObject';
 import Egg from '../objects/Egg';
+import SideEgg from '../objects/SideEgg';
 
 export default class MainScene extends Phaser.Scene {
   private exampleObject: ExampleObject;
@@ -268,11 +269,18 @@ export default class MainScene extends Phaser.Scene {
   shootEgg(){
     var egg1 = new Egg(this);
     egg1.setScale(0.1);
-    
-    
+    this.score -= 50;
+    this.scoreLabel.text = "SCORE " + this.score;
     
   }
 
+  shootSideEgg(){
+    var egg1 = new SideEgg(this);
+    egg1.setScale(0.1);
+    this.score -= 50;
+    this.scoreLabel.text = "SCORE " + this.score;
+    
+  }
   
 
   update() {
@@ -281,6 +289,7 @@ export default class MainScene extends Phaser.Scene {
       var eggcheck = this.eggs.getChildren()[i];
       eggcheck.update();
     }
+
 
 
 
@@ -299,6 +308,10 @@ export default class MainScene extends Phaser.Scene {
 
     if(Phaser.Input.Keyboard.JustDown(this.cursorKeys.space) && this.score>500){
       this.shootEgg();
+    }
+
+    if(Phaser.Input.Keyboard.JustDown(this.cursorKeys.shift) && this.score>500){
+      this.shootSideEgg();
     }
 
 
