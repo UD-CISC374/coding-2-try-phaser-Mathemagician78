@@ -1,27 +1,54 @@
-*Please be sure to list the source of all assets you used here.*
 
-*At least a URL, but also be sure to include any extra information that the artist/author requests you include.*
-
+background
 *https://opengameart.org/content/forest-background-art-2*
+by ramtam
 
-*https://opengameart.org/content/easter-carrot-pick-up-item*
-
+bunny
 *https://opengameart.org/content/bunny-sprite*
+by felinoid
 
-*https://opengameart.org/content/poof-effect-spritesheet*
-
+fox
 *https://opengameart.org/content/fox-wolf-pack-rework*
+posted by AntumDeluge
+created by patvanmackelberg, bleutailfly, & Jordan Irwin (AntumDeluge)
 
+carrot
+*https://opengameart.org/content/easter-carrot-pick-up-item*
+by palomaironique
+submitted by qubodup
+
+growing carrot
+*https://opengameart.org/content/8-bit-pixelart-carrot*
+by sufan02
+
+egg
 *https://opengameart.org/content/easter-egg*
+by fraang
 
-*https://opengameart.org/content/win-music-1*
+poof
+*https://opengameart.org/content/poof-effect-spritesheet*
+by jellyfizh
 
+bunny poof
 *https://opengameart.org/content/skull-death-effect-spritesheet*
+by jellyfizh
 
-*https://opengameart.org/content/pleasing-bell-sound-effect*
-
-*https://opengameart.org/content/warp-sound-1*
-
+background music
 *https://opengameart.org/content/fantasy-logo-music-short-var-epic-orchestra-music*
+by TAD using garageband
 
+win music
+*https://opengameart.org/content/win-music-1*
+by remaxim
+
+carrot eating sound
+*https://opengameart.org/content/pleasing-bell-sound-effect*
+by Spring
+
+warp sound
+*https://opengameart.org/content/warp-sound-1*
+by Arthur
+
+egg-firing sound
 *https://opengameart.org/content/bubbles-pop*
+by farfadet46

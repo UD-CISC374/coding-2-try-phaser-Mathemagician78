@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/coding-2-try-phaser-Mathemagician78/finalassets/carrot.png"
   },
   {
-    "revision": "41e07d8f6008374994164005f62e2f35",
+    "revision": "2f08dd4fd7e274f3339f722e002d97a4",
     "url": "/coding-2-try-phaser-Mathemagician78/finalassets/citations.md"
   },
   {
@@ -72,15 +72,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/coding-2-try-phaser-Mathemagician78/finalassets/win.wav"
   },
   {
-    "revision": "f33c53f7bbff87343b65",
-    "url": "/coding-2-try-phaser-Mathemagician78/finalgen.main.56c453ec1c5f04dc835e.bundle.js"
+    "revision": "3fad2d2593950403eb2f",
+    "url": "/coding-2-try-phaser-Mathemagician78/finalgen.main.f5b038a8aec275f3d9ff.bundle.js"
   },
   {
     "revision": "201b65bee9df6270f739",
     "url": "/coding-2-try-phaser-Mathemagician78/finalgen.vendors.a047ee0740c7d21714d9.bundle.js"
   },
   {
-    "revision": "4b6f1a9b78702f57034abad4fc87ddd1",
+    "revision": "4c9084d731aaed577b40c35744ef4f2d",
     "url": "/coding-2-try-phaser-Mathemagician78/finalindex.html"
   },
   {
