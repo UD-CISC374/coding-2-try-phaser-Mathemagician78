@@ -2,6 +2,7 @@ import ExampleObject from '../objects/exampleObject';
 import Egg from '../objects/Egg';
 import SideEgg from '../objects/SideEgg';
 import hurt from '../objects/hurt';
+import fox from '../objects/fox';
 
 export default class MainScene extends Phaser.Scene {
   private exampleObject: ExampleObject;
@@ -15,8 +16,8 @@ export default class MainScene extends Phaser.Scene {
   
   //player character
   public bunny;
-  //fox character
-  private enemy;
+  //fox group
+  private foxes;
   //Eggs group
   private eggs;
 
@@ -34,6 +35,8 @@ export default class MainScene extends Phaser.Scene {
   private winlabel;
   //Tracks if player has won
   private winner: boolean;
+  //Tracks level
+  private level;
   
   //general background music
   private bgmusic;
@@ -76,12 +79,18 @@ export default class MainScene extends Phaser.Scene {
     //play background music
     this.bgmusic.play(musicConfig);
     
+    //set level to one
+    this.level = 1;
+
     //set up scoreboard
-    this.scoreLabel = this.add.bitmapText(10, 5, "letters", "SCORE ", 16);
+    this.scoreLabel = this.add.bitmapText(10, 5, "letters", "SCORE " + 0, 16);
+    this.winlabel = this.add.bitmapText(80, 5, "letters", "level " + 1, 16);
     //start score at zero
     this.score = 0;
     //begin as not winning
     this.winner = false;
+    //start at level one
+    
 
     //create bunny, add bounds, and set hitbox to more appropriate size
     this.bunny = this.physics.add.sprite(200, 200, "Bun");
@@ -91,14 +100,6 @@ export default class MainScene extends Phaser.Scene {
     //start with rabbit facing left
     this.flag = 1;
 
-    //create fox, set bounds, set movement, and adjust size of sprite and hitbox
-    this.enemy = this.physics.add.sprite(400, 400, "Fox");
-    this.enemy.setCollideWorldBounds(true);
-    this.enemy.setVelocity(100, 100);
-    this.enemy.setBounce(1);
-    this.enemy.setScale(2);
-    this.enemy.body.setSize(5, 15, true);
-    
     //bunny hop left animation
     this.anims.create({
       key: "bunHopL",
@@ -151,7 +152,7 @@ export default class MainScene extends Phaser.Scene {
     //Poof animation for fox
     this.anims.create({
       key: "POOFERWIN",
-      frames: this.anims.generateFrameNumbers("Poof", { start: 0, end: 20 }),
+      frames: this.anims.generateFrameNumbers("Poof", { start: 0, end: 25 }),
       frameRate: 30,
       repeat: 0,
       hideOnComplete: true
@@ -202,19 +203,39 @@ export default class MainScene extends Phaser.Scene {
     //set up group for eggs
     this.eggs = this.physics.add.group();
 
+    //set up group for foxes
+    this.foxes = this.physics.add.group();
+    this.resetFox();
+
     //Add carrot-eating overlap
     this.physics.add.overlap(this.bunny, this.veggies, this.eatCarrot, this.eatCarrot, this);
 
     //Add fox attack overlap
-    this.physics.add.overlap(this.bunny, this.enemy, this.takeDamage, this.takeDamage, this);
+    this.physics.add.overlap(this.bunny, this.foxes, this.takeDamage, this.takeDamage, this);
 
     //Add fox-egg overlap
-    this.physics.add.overlap(this.eggs, this.enemy, this.win, this.win, this);
+    this.physics.add.overlap(this.eggs, this.foxes, this.destroyFox, this.nothing, this);
+
+    //Add fox-fox overlap
+    //this.physics.add.overlap(this.foxes, this.foxes, this.baby, this.nothing, this);    
 
     //Add arrow keys plus space and shift
     this.cursorKeys = this.input.keyboard.createCursorKeys();
   }
 
+
+  //empty function
+  nothing(something, somethingElse){
+    //nothing happens
+  }
+
+  //unused code for baby foxes
+  baby(fox1, fox2){
+    var newFox = new fox(this);
+      newFox.play("foxRun", true);
+      newFox.body.setCollideWorldBounds(true);
+      newFox.body.setSize(5, 15, true);
+  }
 
   //carrot moving function
   moveCarrot(veggie, speed){
@@ -273,6 +294,43 @@ export default class MainScene extends Phaser.Scene {
     this.bunny.alpha = 0.5;
   }
 
+  //Add foxes with neessary properties
+  resetFox(){
+    for(let i = 0; i<this.level; i++){
+      var newFox = new fox(this);
+      newFox.play("foxRun", true);
+      newFox.body.setCollideWorldBounds(true);
+      newFox.setScale(2);
+      newFox.body.setSize(5, 15, true);
+      this.winlabel.text = "level " + this.level;
+    }
+  }
+
+  //poof fox upon defeat
+  destroyFox(theEgg, fox){
+    //poof egg on impact
+    theEgg.setTexture("Poof", 5);
+    theEgg.play("POOFER", true);
+    
+    //poof fox on impact
+    fox.setTexture("Poof", 5);
+    fox.play("POOFERWIN", true);
+
+    //remove fox from group
+    this.foxes.remove(fox);
+          
+    //destroy fox after animation
+    fox.once('animationcomplete', () => {
+      console.log('animationcomplete')
+      fox.destroy()
+    })
+
+    //if all foxes defeated, player wins, call win function
+    if(this.foxes.getChildren().length == 0){
+      this.win(theEgg, fox);
+    }
+  }
+  
 
   //Bunny-fox collision result
   takeDamage(bunny, wolf){
@@ -344,27 +402,22 @@ export default class MainScene extends Phaser.Scene {
     this.scoreLabel.text = "SCORE " + this.score;
   }
 
-
   //WIN!
-  win(enemy,theEgg){
-    
-    //poof egg on impact
-    theEgg.setTexture("Poof", 5);
-    theEgg.play("POOFER", true);
-
-    //poof fox on impact
-    enemy.setTexture("Poof", 5);
-    enemy.play("POOFERWIN", true);
-
+  win(theEgg,enemy){
     //play win sound
     this.winSound.play();
 
-    //stop fox and note that player won
-    this.enemy.setVelocity(0, 0);
+    //note that player won and raise level
     this.winner = true;
+    this.level++;
 
-    //show text for winning
-    this.winlabel = this.add.bitmapText(50, 50, "letters", "WINNER", 50);
+    //enable foxes after ten seconds
+    this.time.addEvent({
+      delay: 10000,
+      callback: this.resetFox,
+      callbackScope: this,
+      loop: false
+    });
   }
 
   //Move player
@@ -416,11 +469,6 @@ export default class MainScene extends Phaser.Scene {
     this.moveCarrot(this.food, 2);
     this.moveCarrot(this.food2, 3);
     this.moveCarrot(this.food3, 4);
-    
-    //make fox run if not won yet
-    if(this.winner == false){
-    this.enemy.play("foxRun", true);
-    }
 
     //fire egg up with spacebar when player active and enough points
     if(Phaser.Input.Keyboard.JustDown(this.cursorKeys.space) && this.score>500 && this.bunny.active){
@@ -471,6 +519,7 @@ export default class MainScene extends Phaser.Scene {
         this.bunny.play("bunHopSR");
       }
     }
+
 
     //move sprite around board with arrow keys
     this.movePlayerManager();
